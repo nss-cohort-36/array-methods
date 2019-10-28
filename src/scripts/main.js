@@ -113,38 +113,36 @@ const businesses = [
 
 const outEl = document.querySelector("#output")
 
-outEl.innerHTML += "<h1>Purchasing Agents</h1>";
+outEl.innerHTML += "<h1>Search Results</h1>";
 
-/*
-    Using map(), you extract the purchasing agent object
-    from each business and store it in a new array
-*/
-const agents = businesses.map(business => {
-  console.log(business.purchasingAgent)
-  return business.purchasingAgent
-})
+document.querySelector("#companySearch")
+  .addEventListener("keypress", keyPressEvent => {
+    // console.log("Keycode of whatever was presssed", keyPressEvent.charCode)
+    if (keyPressEvent.charCode === 13) {
+      /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+      // console.log("Enter key was pressed")
 
-agents.forEach(agent => {
-  outEl.innerHTML += `<h2>${agent.nameFirst} ${agent.nameLast}</h2>`;
-  outEl.innerHTML += "<hr/>";
-});
+      const foundBusiness = businesses.find(
+        business => {
+          // console.log(business.companyName)
+          return business.companyName.toLowerCase().includes(keyPressEvent.target.value.toLowerCase())
+        });
 
-// Lightning Exercise: Instead of just returning the purchasing agent object, return a new object that has the full name of the purchasing agent, the company name, and the phone number. The data structure is shown below. Use that new data structure to display the agent with their company and phone number
+      console.log("found business", foundBusiness)
 
-const agentsWithCompanyAndPhone = businesses.map(business => {
-  return {
-    "fullName": `${business.purchasingAgent.nameFirst} ${business.purchasingAgent.nameLast}`,
-    "company": business.companyName,
-    "phoneNumber": business.phoneWork
-  }
+      outEl.innerHTML = `
+                <h2>
+                ${foundBusiness.companyName}
+                </h2>
+                <section>
+                ${foundBusiness.addressFullStreet}
 
-})
-
-console.table(agentsWithCompanyAndPhone)
-
-agentsWithCompanyAndPhone.forEach(agent => {
-  outEl.innerHTML += `<h2>${agent.fullName}</h2>`;
-  outEl.innerHTML += `<p>${agent.company}</p>`
-  outEl.innerHTML += `<p>Phone: ${agent.phoneNumber}</p>`
-  outEl.innerHTML += "<hr/>";
-});
+                </section>
+                <section>
+                ${foundBusiness.addressCity},
+                ${foundBusiness.addressStateCode}
+                ${foundBusiness.addressZipCode}
+                </section>
+            `;
+    }
+  });
