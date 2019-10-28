@@ -114,7 +114,21 @@ const businesses = [
 const outEl = document.querySelector("#output")
 outEl.innerHTML = "<h1>Active Businesses</h1>"
 
-businesses.forEach(business => {
+// Array to contain all the New York businesses
+const newYorkBusinesses = businesses.filter(business => {
+  let inNewYork = false
+
+  if (business.addressStateCode === "NY") {
+      inNewYork = true
+  }
+  // console.log(business.companyName, inNewYork)
+
+  return inNewYork
+})
+
+// console.log(newYorkBusinesses)
+
+newYorkBusinesses.forEach(business => {
   const zipcodeKey = "addressZipCode"
   outEl.innerHTML += `
     <h2>${business.companyName}</h2>
