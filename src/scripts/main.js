@@ -115,33 +115,61 @@ const outEl = document.querySelector("#output")
 
 outEl.innerHTML += "<h1>Search Results</h1>";
 
-document.querySelector("#companySearch")
-  .addEventListener("keypress", keyPressEvent => {
-    // console.log("Keycode of whatever was presssed", keyPressEvent.charCode)
+// document.querySelector("#companySearch")
+//   .addEventListener("keypress", keyPressEvent => {
+//     // console.log("Keycode of whatever was presssed", keyPressEvent.charCode)
+//     if (keyPressEvent.charCode === 13) {
+//       /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+//       // console.log("Enter key was pressed")
+
+//       const foundBusiness = businesses.find(
+//         business => {
+//           // console.log(business.companyName)
+//           return business.companyName.toLowerCase().includes(keyPressEvent.target.value.toLowerCase())
+//         });
+
+//       console.log("found business", foundBusiness)
+
+//       outEl.innerHTML = `
+//                 <h2>
+//                 ${foundBusiness.companyName}
+//                 </h2>
+//                 <section>
+//                 ${foundBusiness.addressFullStreet}
+
+//                 </section>
+//                 <section>
+//                 ${foundBusiness.addressCity},
+//                 ${foundBusiness.addressStateCode}
+//                 ${foundBusiness.addressZipCode}
+//                 </section>
+//             `;
+//     }
+//   });
+
+// Lightning Exercise 1: Refactor your code to search for purchasing agents instead. If the search text is found in the first name of any purchasing agent, show that agent.
+
+// Lightning Exercise 2: Refactor your code so that if the search text is found in the first name, or last name, of any purchasing agent, show that agent.
+
+document.querySelector("#companySearch").addEventListener("keypress", keyPressEvent => {
     if (keyPressEvent.charCode === 13) {
       /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
-      // console.log("Enter key was pressed")
 
       const foundBusiness = businesses.find(
         business => {
-          // console.log(business.companyName)
-          return business.companyName.toLowerCase().includes(keyPressEvent.target.value.toLowerCase())
+          const agentFirst = business.purchasingAgent.nameFirst
+          const agentLast = business.purchasingAgent.nameLast
+          const input = keyPressEvent.target.value
+          return agentFirst.includes(input) || agentLast.includes(input)
         });
-
-      console.log("found business", foundBusiness)
 
       outEl.innerHTML = `
                 <h2>
-                ${foundBusiness.companyName}
+                ${foundBusiness.purchasingAgent.nameFirst} ${foundBusiness.purchasingAgent.nameLast}
                 </h2>
                 <section>
-                ${foundBusiness.addressFullStreet}
+                ${foundBusiness.companyName}
 
-                </section>
-                <section>
-                ${foundBusiness.addressCity},
-                ${foundBusiness.addressStateCode}
-                ${foundBusiness.addressZipCode}
                 </section>
             `;
     }
