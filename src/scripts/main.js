@@ -112,43 +112,21 @@ const businesses = [
 ];
 
 const outEl = document.querySelector("#output")
-outEl.innerHTML = "<h1>Active Businesses</h1>"
 
-// Array to contain all the New York businesses
-const newYorkBusinesses = businesses.filter(business => {
-  let inNewYork = false
+outEl.innerHTML += "<h1>Purchasing Agents</h1>";
 
-  if (business.addressStateCode === "NY") {
-      inNewYork = true
-  }
-  // console.log(business.companyName, inNewYork)
-
-  return inNewYork
+/*
+    Using map(), you extract the purchasing agent object
+    from each business and store it in a new array
+*/
+const agents = businesses.map(business => {
+  // console.log(business.purchasingAgent)
+  return business.purchasingAgent
 })
 
-// console.log(newYorkBusinesses)
+console.table(agents)
 
-// Lightning Exercise: Use filter() to create another array named manufacturingBusinesses that will contain all businesses in the manufacturing industry. Display those to the DOM.
-
-const manufacturingBusinesses = businesses.filter(business => {
-  console.log(indexPosition)
-  if (business.companyIndustry === "Manufacturing") {
-    return true
-  } else {
-    return false
-  }
-})
-
-manufacturingBusinesses.forEach(business => {
-  const zipcodeKey = "addressZipCode"
-  outEl.innerHTML += `
-    <h2>${business.companyName}</h2>
-    <section>
-      ${business.addressFullStreet}
-    </section>
-    <section>
-    ${business.addressCity}, ${business["addressStateCode"]} ${business[zipcodeKey]}
-    </section>
-  `
-  outEl.innerHTML += "<hr/>"
+agents.forEach(agent => {
+  outEl.innerHTML += `<h2>${agent.nameFirst} ${agent.nameLast}</h2>`;
+  outEl.innerHTML += "<hr/>";
 });
