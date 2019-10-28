@@ -113,64 +113,68 @@ const businesses = [
 
 const outEl = document.querySelector("#output")
 
-outEl.innerHTML += "<h1>Search Results</h1>";
+outEl.innerHTML += "<h1>Businesses</h1>";
 
-// document.querySelector("#companySearch")
-//   .addEventListener("keypress", keyPressEvent => {
-//     // console.log("Keycode of whatever was presssed", keyPressEvent.charCode)
-//     if (keyPressEvent.charCode === 13) {
-//       /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
-//       // console.log("Enter key was pressed")
+businesses.forEach(business => {
+  /* CALCULATE ORDER SUMMARY */
+  // let totalOrders = 0
+  // business.orders.forEach(order => totalOrders += order)
 
-//       const foundBusiness = businesses.find(
-//         business => {
-//           // console.log(business.companyName)
-//           return business.companyName.toLowerCase().includes(keyPressEvent.target.value.toLowerCase())
-//         });
+  /* CALCULATE ORDER SUMMARY */
+  let totalOrders = business.orders.reduce(
+    (currentTotal, nextValue) => currentTotal += nextValue,
+    0
+  )
 
-//       console.log("found business", foundBusiness)
 
-//       outEl.innerHTML = `
-//                 <h2>
-//                 ${foundBusiness.companyName}
-//                 </h2>
-//                 <section>
-//                 ${foundBusiness.addressFullStreet}
 
-//                 </section>
-//                 <section>
-//                 ${foundBusiness.addressCity},
-//                 ${foundBusiness.addressStateCode}
-//                 ${foundBusiness.addressZipCode}
-//                 </section>
-//             `;
-//     }
-//   });
+  outEl.innerHTML += `
+      <h2>
+          ${business.companyName}
+          ($${totalOrders.toFixed(2)})
+      </h2>
+      <section>
+          ${business.addressFullStreet}
+      </section>
+      <section>
+          ${business.addressCity},
+          ${business.addressStateCode}
+          ${business.addressZipCode}
+      </section>
+  `;
+  outEl.innerHTML += "<hr/>";
+});
 
-// Lightning Exercise 1: Refactor your code to search for purchasing agents instead. If the search text is found in the first name of any purchasing agent, show that agent.
 
-// Lightning Exercise 2: Refactor your code so that if the search text is found in the first name, or last name, of any purchasing agent, show that agent.
+// Lightning Exercise 1: Use the reduce method on the following array to determine how much total rain fell last month.
 
-document.querySelector("#companySearch").addEventListener("keypress", keyPressEvent => {
-    if (keyPressEvent.charCode === 13) {
-      /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+const monthlyRainfall = [23, 13, 27, 20, 20, 31, 33, 26, 19, 12, 14, 12, 10]
 
-      const foundBusiness = businesses.find(
-        business => {
-          const agentFirst = business.purchasingAgent.nameFirst
-          const agentLast = business.purchasingAgent.nameLast
-          const input = keyPressEvent.target.value
-          return agentFirst.includes(input) || agentLast.includes(input)
-        });
+const totalRainfall = monthlyRainfall.reduce((total, currentValue) => {
+  console.log(total, currentValue)
+  return total += currentValue
+}, 1000)
 
-      outEl.innerHTML = `
-                <h2>
-                ${foundBusiness.purchasingAgent.nameFirst} ${foundBusiness.purchasingAgent.nameLast}
-                </h2>
-                <section>
-                ${foundBusiness.companyName}
+console.log(totalRainfall)
 
-                </section>
-            `;
-    }
-  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Lightning Exercise 2: Use the reduce method on the following array to build a sentence.
+
+const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]
+
+const TheSentence = words.reduce((sentence, currentWord) => sentence += ` ${currentWord}`)
+
+console.log(`${TheSentence}.`)
